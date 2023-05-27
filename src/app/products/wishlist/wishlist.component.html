@@ -1,0 +1,60 @@
+<section class="g-brd-bottom g-brd-gray-light-v4 g-py mt-4">
+    <div class="container">
+        <div class="d-sm-flex text-center">
+            <div class="align-self-center">
+                <h1 class="h3 mb-0">Your wishlist</h1>
+            </div>
+            <!-- <div class="align-self-center ml-auto">
+                <ul class="u-list-inline">
+                    <li class="list-inline-item g-mr-5">
+                        <a class="u-link-v5 g-color-text" href="">Home</a>
+                    </li>
+                </ul>
+            </div> -->
+        </div>
+
+    </div>
+</section>
+
+<!-- empty wishlist -->
+<div *ngIf="wishlistItems==0" class="container m-5 text-center">
+    <h3 class="text-danger ms-auto mb-4">Your wishlist is Empty</h3>
+    <img class="mt-3" style="width: 300px;" src="https://assets.materialup.com/uploads/87d4df96-a55f-4f4b-9a17-a696eded97f3/preview.gif" alt="empty_cart">
+    <a class="btn btn-outline-success ms-3" type="submit" routerLink="/products">
+        <i class="bi-cart-fill me-1"></i>
+         Add more
+    </a>
+</div>
+
+
+<section *ngIf="wishlistItems!=0" class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="col mb-5" *ngFor="let wishlist of wishlistItems ">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img height="250px" class="card-img-top" [src]="wishlist.imageUrl" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{wishlist.title.slice(0,20)}}</h5>
+                            <!-- Product price-->
+                            {{wishlist.price}}
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="d-flex justify-content-between">
+                            <button (click)="removeWishlistItem(wishlist.id)" class="btn btn-outline-dark btn-danger mt-auto"><i class="fa-solid fa-heart-circle-minus"></i></button>
+                            <button (click)="addtocart(wishlist)" class="btn btn-outline-dark btn-success mt-auto"><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>  
+    </div>
+</section>
+
+

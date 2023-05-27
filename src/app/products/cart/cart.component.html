@@ -1,0 +1,218 @@
+<section *ngIf="cartItems.length!=0" class="h-100 h-custom mt-3" style="background-color: #d2c9ff;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-8">
+                <div class="p-5">
+                  <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                    <h6 class="mb-0 text-muted">{{cartItemsCount }} items</h6>
+                  </div>
+                  <hr class="my-4">
+
+                  <div *ngFor="let item of cartItems"
+                    class="row mb-4 d-flex justify-content-between align-items-center">
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      <img [src]="item.imageUrl" class="img-fluid rounded-3" alt="Cotton T-shirt">
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <h6 class="text-muted">{{item.title.slice(0,7)}}....</h6>
+                      <h6 class="text-black mb-0">{{item.title}} </h6>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                      <button (click)="decrCartItem(item.id)" class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                        <i class="fas fa-minus"></i>
+                      </button>
+
+                      <input id="form1" min="0" name="quantity" [value]="item.quantity" type="number"
+                        class="form-control form-control-sm" />
+
+                      <button (click)="incrCartItem(item.id)" class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                      <h6 class="mb-0">{{item.grandTotal}} </h6>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                      <a (click)="removeCartItem(item.id)" class="text-muted"><i class="fas fa-times"></i></a>
+                    </div>
+                  </div>
+
+                  <hr class="my-4">
+
+                  <div class="pt-5 d-flex">
+                    <div class="col text-right">
+                      <button (click)="emptyCart()" class="btn btn-danger">Empty cart <i
+                          class="fa-solid fa-cart-shopping"></i></button>
+                    </div>
+                    <h6 class="mb-0"><a href="#!" class="text-body" routerLink="/products"><i
+                          class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 bg-grey">
+                <div class="p-5">
+                  <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                  <hr class="my-4">
+
+                  <div class="d-flex justify-content-between mb-4">
+                    <h5 class="text-uppercase">items {{cartItemsCount}}</h5>
+                    <h5>{{cartTotalPrice}}</h5>
+                  </div>
+
+                  <h5 class="text-uppercase mb-3">Shipping</h5>
+
+                  <div class="mb-4 pb-2">
+                    <select class="select">
+                      <option value="1">Standard-Delivery- €5.00</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="4">Four</option>
+                    </select>
+                  </div>
+
+                  <h5 class="text-uppercase mb-3">Give code</h5>
+
+                  <div class="mb-5">
+                    <div class="form-outline">
+                      <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea2">Enter your code</label>
+                    </div>
+                  </div>
+
+                  <hr class="my-4">
+
+                  <div class="d-flex justify-content-between mb-5">
+                    <h5 class="text-uppercase">Sub total</h5>
+                    <h5>$ {{cartTotalPrice}} </h5>
+                  </div>
+
+                  <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal">Checkout</button>
+                    <button class="btn btn-link" type="button">Register</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- empty cart -->
+
+<div *ngIf="cartItems.length==0" class="container-fluid  mt-100">
+  <div class="row">
+
+    <div class="col-md-12">
+
+      <div class="card">
+        <div class="card-header">
+          <h5>Cart</h5>
+        </div>
+        <div class="card-body cart">
+          <div class="col-sm-12 empty-cart-cls text-center">
+            <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+            <h3><strong>Your Cart is Empty</strong></h3>
+            <h4>Add something to make me happy :)</h4>
+            <a routerLink="/products" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue
+              shopping</a>
+
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- checkout modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Checkout details</h5>
+        <button (click)="modalClose()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="proceedBtn" class="row">
+          <div class="col">
+            <h4>Delivery address</h4>
+            <p>{{user.username}}</p>
+            <p>Address : {{user.address}} </p>
+            <p>Pincode : {{user.Pincode}} </p>
+          </div>
+          <div class="col align-items-right  ">
+            <h4>need to pay</h4>
+            <p>Total amt: {{cartTotalPrice}}</p>
+            <p>Discount: {{discount}}</p>
+            <p>Amount should Pay: {{finalAmount}}</p>
+          </div>
+        </div>
+        <form *ngIf="!proceedBtn" [formGroup]="addressForm" class="row g-3 full-width-form" (ngSubmit)="submit()">
+           <!-- payment & delivery address details -->
+          
+           <!-- main form -->
+          <div class="form-group">
+            <input type="text" name="username" formControlName="username" class="form-control full-width-input"
+              placeholder="Username" required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="addr1" formControlName="addr1" class="form-control full-width-input"
+              placeholder="Street" required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="addr2" formControlName="addr2" class="form-control full-width-input"
+              placeholder="Pincode" required>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control full-width-input" name="addr3" formControlName="addr3"
+              placeholder="Address(Landmark/road name)" required></textarea>
+          </div>
+          <div>
+            <input type="submit" class="btn btn-primary" value="Proceed to Payment">
+          </div>
+        </form>
+        <div class="d-flex justify-content-between mt-3 ms-3">
+          <h4 class="text-danger">Total amount : $ {{finalAmount}}</h4>
+          <button *ngIf="offerAvl==true" (click)="showOffers()" class="text-warning txt-no-decoration me-3 btn btn-link"
+            style="text-decoration: none;"><i class="fa-solid fa-tag fa-beat-fade" style="color: #fbf323;"></i> view
+            offers</button>
+        </div>
+       
+
+
+
+        <div *ngIf="offerShown==true" class="d-flex justify-content-between ms-5 me-5">
+          <img *ngIf="cartTotalPrice>200" (click)="discount20()" width="100px"
+            src="https://i.pinimg.com/originals/84/53/d0/8453d04034dcc0d4abaca83cda972b4d.png" alt="promo_img">
+          <img (click)="discount10()" width="100px"
+            src="https://freepngimg.com/thumb/money/63873-and-website-discount-coupon-money-tmall-hawaii.png" alt="">
+        </div>
+
+      </div>
+      <div *ngIf="makePaymentStatus" class="modal-footer">
+        <ngx-paypal [config]="payPalConfig" style="width: 100%;"></ngx-paypal>
+      </div>
+      <div *ngIf="proceedBtn" class="modal-footer">
+        <button *ngIf="!makePaymentStatus" (click)="makePayment()" type="button" class="btn btn-success">Place Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
